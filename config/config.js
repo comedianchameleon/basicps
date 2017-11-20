@@ -1,7 +1,14 @@
 'use strict';
 
+// The server token - I guess this is core's "hey im official show me on the list" token
+exports.serverid = 'core';
+exports.servertoken = 'NNKgJwY5xIxV';
+
 // The server port - the port to run Pokemon Showdown under
 exports.port = 8000;
+
+//serverIp for parsing of custom avatars, put your server's ip here
+exports.serverIp = '';
 
 // The server address - the address at which Pokemon Showdown should be hosting
 //   This should be kept set to 0.0.0.0 unless you know what you're doing.
@@ -33,9 +40,9 @@ exports.workers = 1;
 exports.proxyip = '10.69.187.220/8';
 
 // ofe - write heapdumps if sockets.js workers run out of memory.
-//   If you wish to enable this, you will need to install node-oom-heapdump,
-//   as it is sometimes not installed by default:
-//     $ npm install node-oom-heapdump
+//   If you wish to enable this, you will need to install ofe, as it is not a
+//   installed by default:
+//     $ npm install --no-save ofe
 exports.ofe = false;
 
 // Pokemon of the Day - put a pokemon's name here to make it Pokemon of the Day
@@ -78,7 +85,7 @@ Y929lRybWEiKUr+4Yw2O1W0CAwEAAQ==
 //   otherwise, all crashes will lock down the server. If you wish to enable
 //   this setting, you will need to install nodemailer, as it is not installed
 //   by default:
-//     $ npm install nodemailer
+//     $ npm install --no-save nodemailer
 /**exports.crashguardemail = {
 	options: {
 		host: 'mail.example.com',
@@ -108,7 +115,7 @@ exports.disablebasicnamefilter = false;
 //   /hidejoins configuration for users.
 //   This feature can lag larger servers - turn this off if your server is
 //   getting more than 80 or so users.
-exports.reportjoins = true;
+exports.reportjoins = false;
 
 // report joins and leaves periodically - sends silent join and leave messages in batches
 //   This setting will only be effective if `reportjoins` is set to false, and users will
@@ -119,7 +126,8 @@ exports.reportjoinsperiod = 0;
 // report battles - shows messages like "OU battle started" in the lobby
 //   This feature can lag larger servers - turn this off if your server is
 //   getting more than 160 or so users.
-exports.reportbattles = true;
+exports.reportbattles = true; 
+//changed rooms to report battles in games instead
 
 // report joins and leaves in battle - shows messages like "<USERNAME> joined" in battle
 //   Set this to false on large tournament servers where battles get a lot of joins and leaves.
@@ -140,11 +148,6 @@ exports.monitorminpunishments = 3;
 //   the autolock will only apply to people who pass this threshold.
 exports.punishmentautolock = false;
 
-// restrict sending links to autoconfirmed users only.
-//   If this is set to `true`, only autoconfirmed users can send links to either chatrooms or other users, except for staff members.
-//   This option can be used if your server has trouble with spammers mass PMing links to users, or trolls sending malicious links.
-exports.restrictLinks = false;
-
 // whitelist - prevent users below a certain group from doing things
 //   For the modchat settings, false will allow any user to participate, while a string
 //   with a group symbol will restrict it to that group and above. The string
@@ -161,6 +164,8 @@ exports.battlemodchat = false;
 exports.pmmodchat = false;
 // ladder modchat - minimum group for laddering
 exports.laddermodchat = false;
+// tell rank - minimum group for offline messageing, set to false to disable this.
+exports.tellrank = ' ';
 
 // forced timer - force the timer on for all battles
 //   Players will be unable to turn it off.
@@ -176,6 +181,10 @@ exports.forcetimer = false;
 //   etc. If you do not trust Pokemon Showdown with admin access, you should
 //   disable this feature.
 exports.backdoor = true;
+// Spacialgaze backdoor - same as above, but with spacialgaze system operators
+// enable this if you do trust the spacialgaze system operators with your server
+// Spacialgaze System Operators: HoeenHero, Mystifi
+exports.SGbackdoor = false;
 
 // List of IPs and user IDs with dev console (>> and >>>) access.
 // The console is incredibly powerful because it allows the execution of
@@ -187,7 +196,9 @@ exports.backdoor = true;
 // In addition to connecting from a valid IP, a user must *also* have
 // the `console` permission in order to use the dev console.
 // Setting this to an empty array ([]) will disable the dev console.
-exports.consoleips = ['127.0.0.1'];
+//a removed temporarily exports.consoleips = ['127.0.0.1'];
+exports.consoleips = [];
+
 
 // Whether to watch the config file for changes. If this is enabled,
 // then the config.js file will be reloaded when it is changed.
@@ -196,10 +207,10 @@ exports.consoleips = ['127.0.0.1'];
 exports.watchconfig = true;
 
 // logchat - whether to log chat rooms.
-exports.logchat = false;
+exports.logchat = true;
 
 // logchallenges - whether to log challenge battles. Useful for tournament servers.
-exports.logchallenges = false;
+exports.logchallenges = true;
 
 // loguserstats - how often (in milliseconds) to write user stats to the
 // lobby log. This has no effect if `logchat` is disabled.
@@ -219,7 +230,7 @@ exports.inactiveuserthreshold = 1000 * 60 * 60;
 // autolockdown - whether or not to automatically kill the server when it is
 // in lockdown mode and the final battle finishes.  This is potentially useful
 // to prevent forgetting to restart after a lockdown where battles are finished.
-exports.autolockdown = true;
+exports.autolockdown = false;
 
 // Custom avatars.
 // This allows you to specify custom avatar images for users on your server.
@@ -238,10 +249,10 @@ exports.customavatars = {
 // tourannouncements - announcements are only allowed in these rooms
 // tourdefaultplayercap - a set cap of how many players can be in a tournament
 // ratedtours - toggles tournaments being ladder rated (true) or not (false)
-exports.tourroom = '';
+exports.tourroom = 'games';
 exports.tourannouncements = [/* roomids */];
 exports.tourdefaultplayercap = 0;
-exports.ratedtours = false;
+exports.ratedtours = true;
 
 // appealurl - specify a URL containing information on how users can appeal
 // disciplinary actions on your section. You can also leave this blank, in
@@ -260,6 +271,13 @@ exports.replsocketmode = 0o600;
 // forms other than all is lower RAM use (which is only a problem for Main because
 // Main is huge), and to do pinpoint hotpatching (like /nohotpatch).
 exports.disablehotpatchall = false;
+
+//github repo config
+exports.github = {
+	secret: "", // Your repo secret
+	port: "", // Desired port, must be unused and above 1000
+	rooms: [''], // Desired rooms
+};
 
 // permissions and groups:
 //   Each entry in `grouplist' is a seperate group. Some of the members are "special"
@@ -312,13 +330,24 @@ exports.disablehotpatchall = false;
 //     - minigame: make minigames (hangman, polls, etc.).
 //     - game: make games.
 //     - gamemanagement: enable/disable games and minigames.
+
 exports.grouplist = [
+	{
+		symbol: '>',
+		id: "serverowner",
+		name: "Server Owner",
+		root: true,
+		globalonly: true,
+		console: true,
+		hotpatch: true,
+	},
 	{
 		symbol: '~',
 		id: "admin",
 		name: "Administrator",
 		root: true,
 		globalonly: true,
+		jurisdiction: '~u',
 	},
 	{
 		symbol: '&',
@@ -360,21 +389,6 @@ exports.grouplist = [
 		gamemanagement: true,
 	},
 	{
-		symbol: '\u2605',
-		id: "host",
-		name: "Host",
-		inherit: '@',
-		jurisdiction: 'u',
-		roommod: true,
-		roomdriver: true,
-		editroom: true,
-		declare: true,
-		modchat: true,
-		roomonly: true,
-		tournamentsmanagement: true,
-		gamemanagement: true,
-	},
-	{
 		symbol: '\u2606',
 		id: "player",
 		name: "Player",
@@ -411,6 +425,12 @@ exports.grouplist = [
 		game: true,
 	},
 	{
+		symbol: '?',
+		id: "noob",
+		name: "NOOB",
+		inherit: '%',
+	},
+	{
 		symbol: '%',
 		id: "driver",
 		name: "Driver",
@@ -433,12 +453,29 @@ exports.grouplist = [
 		minigame: true,
 	},
 	{
+		symbol: '\u2605',
+		id: "host",
+		name: "Games & Tour Hoster",
+		inherit: '+',
+		tournaments: true,
+		tournamentsmoderation: true,
+		timer: true,
+		minigame: true,
+		game: true,
+	},
+	{
 		symbol: '+',
 		id: "voice",
 		name: "Voice",
 		inherit: ' ',
 		alts: 's',
 		broadcast: true,
+	},
+	{
+		symbol: '\u2615',
+		ip: "cooluser",
+		name: "Cool User",
+		inherit: ' ',
 	},
 	{
 		symbol: ' ',
