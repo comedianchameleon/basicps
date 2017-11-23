@@ -27,7 +27,69 @@ const HOURMUTE_LENGTH = 60 * 60 * 1000;
 const MAX_CHATROOM_ID_LENGTH = 225;
 
 exports.commands = {
+	'!makedo': true,
+	md: 'makedo',
+	makesay: 'makedo',
+	makedo: function (target, room, user) {
+		if (!target) return this.parse('/help makedo');
+		if (!this.can('console')) return false;
+		target = this.splitTarget(target);
+		let targetUser = this.targetUser;
+		if (!targetUser || !targetUser.connected) return this.errorReply("User '" + this.targetUsername + "' not found.");
+		//a not needed: targetUser.tryJoinRoom(room, targetUser); 
+		Chat.parse(target, room, targetUser, targetUser);		this.logModCommand(user.name + " made " + this.targetUsername + " do '" + target + "'.");
+	},
+	makedohelp: ["/makedo OR /md OR /makesay [username], [message] - Makes a user do/say something as if they typed it. Requires: >"],
+	'!popup': true,
+	htmlpopup: 'popup',
+	pop: 'popup',
+	pup: 'popup',
+	popup: function (target, room, user) {
+		if (!target) return this.parse('/help popup');
+		target = this.splitTarget(target);
+		let targetUser = this.targetUser;
+		if (!targetUser || !targetUser.connected) return this.errorReply("User '" + this.targetUsername + "' not found.");
+		if (!this.can('makeroom')) return false;
+		targetUser.popup('|html|' + target);
+		this.logModCommand(user.name + " sent " + this.targetUsername + " a popup message.");
+	}, 
+	popuphelp: ["/popup, /pop, /pup OR /htmlpopup [username], [message] - Displays a popup with a HTML message to a user. Requires: & ~ >"],
+	'!authority': true,
+	auth: 'authority',
+	stafflist: 'authority',
+	globalauth: 'authority',
+	authlist: 'authority',
+	authority: function (target, room, user, connection) {
+		if (target) {
+			let targetRoom = Rooms.search(target);
+			let unavailableRoom = targetRoom && targetRoom.checkModjoin(user);
+			if (targetRoom && !unavailableRoom) return this.parse('/roomauth1 ' + target);
+			return this.parse('/userauth ' + target);
+		}
+		let rankLists = {};
+		let ranks = Object.keys(Config.groups);
+		for (let u in Users.usergroups) {
+			let rank = Users.usergroups[u].charAt(0);
+			if (rank === ' ') continue;
+			// In case the usergroups.csv file is not proper, we check for the server ranks.
+			if (ranks.includes(rank)) {
+				let name = Users.usergroups[u].substr(1);
+				if (!rankLists[rank]) rankLists[rank] = [];
+				if (name) rankLists[rank].push(SG.nameColor(name, (Users(name) && Users(name).connected)));
+			}
+		}
 
+		let buffer = Object.keys(rankLists).sort((a, b) =>
+			(Config.groups[b] || {rank: 0}).rank - (Config.groups[a] || {rank: 0}).rank
+		).map(r =>
+			(Config.groups[r] ? "<b>" + Config.groups[r].name + "s</b> (" + r + ")" : r) + ":\n" + rankLists[r].sort((a, b) => toId(a).localeCompare(toId(b))).join(", ")
+		);
+
+		if (!buffer.length) return connection.popup("This server has no global authority.");
+		connection.send("|popup||html|" + buffer.join("\n\n"));
+	},
+
+	
 	'!version': true,
 	version: function (target, room, user) {
 		if (!this.runBroadcast()) return;
