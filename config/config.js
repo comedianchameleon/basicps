@@ -473,7 +473,7 @@ exports.grouplist = [
 	},
 	{
 		symbol: '\u2615',
-		ip: "cooluser",
+		id: "cooluser",
 		name: "Cool User",
 		inherit: ' ',
 	},
