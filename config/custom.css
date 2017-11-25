@@ -1,10 +1,13 @@
 body { 
-	background: url("https://i.imgur.com/f7sWPT0.png") left / cover; 
+	background: url("https://images4.alphacoders.com/775/thumb-1920-775002.jpg") left / cover; 
 	cursor: url(https://i.imgur.com/INQmRyR.png), auto;
 }
-button.button.mainmenu2:active {
+button.button.mainmenu2 {
 	background: linear-gradient(to buttom, blue, #5f5f5f);	
 }
 div.chat-log {
-    font-family: comic sans-serif;
+	font-family: comic sans-serif;
+}
+div#room-lobby.ps-room.ps-room-light {
+	background: rgba(127, 125, 255, 0.5)	
 }
