@@ -9,5 +9,8 @@ div.chat-log {
 	font-family: comic sans-serif;
 }
 div#room-lobby.ps-room.ps-room-light {
-	background: rgba(127, 125, 255, 0.5)	
+	background: rgba(240, 200, 255, 0.85)
+}
+div#room-games.ps-room.ps-room-light {
+	background: rgba(120, 200, 255, 0.85)	
 }
