@@ -1,9 +1,12 @@
 body { 
-	background: url("https://images4.alphacoders.com/775/thumb-1920-775002.jpg") left / cover; 
+	background: url("https://i.imgur.com/YiOYhw8.jpg") left / cover; 
 	cursor: url(https://i.imgur.com/INQmRyR.png), auto;
-}
+} 
+/*
+original background https://images4.alphacoders.com/775/thumb-1920-775002.jpg submitted by "ASR-94" on alphacoders.com
+*/
 button.button.mainmenu2 {
-	background: linear-gradient(to buttom, blue, #5f5f5f);	
+	background: linear-gradient(to top, #5f5f5f, blue);	
 }
 div.chat-log {
 	font-family: comic sans-serif;
