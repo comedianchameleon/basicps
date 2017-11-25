@@ -8,6 +8,6 @@ body {
 .button.mainmenu1:hover {
 	background: linear-gradient(to buttom, #5f5f5f), red);	
 }
-chat.log {
-	font-family: Kristen ITC;	
+.chat-log {
+	font-family: comic sans-serif;	
 }
