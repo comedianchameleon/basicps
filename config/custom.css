@@ -2,12 +2,12 @@ body {
 	background: url("https://i.imgur.com/f7sWPT0.png") left / cover; 
 	cursor: url(https://i.imgur.com/INQmRyR.png), auto;
 }
-.button.mainmenu1 {
+button.button.mainmenu1 {
 	background: linear-gradient(to buttom, blue, #5f5f5f);	
 }
-.button.mainmenu1:hover {
+button.button.mainmenu1:hover {
 	background: linear-gradient(to buttom, #5f5f5f), red);	
 }
-.chat-log {
+div.chat-log {
 	font-family: comic sans-serif;	
 }
