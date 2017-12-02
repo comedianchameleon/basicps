@@ -14,7 +14,7 @@ div.chat-log {
 	/* font-family: comic sans-serif; 
 		font-size: 4; */
 	/* font-family: Kristen ITC */
-	/* font-family: Segoe Print */
+	/**/ font-family: Segoe Print 
 }
 div#room-lobby.ps-room.ps-room-light {
 	background: rgba(240, 200, 255, 0.85)
